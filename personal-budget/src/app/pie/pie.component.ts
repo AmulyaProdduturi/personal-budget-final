@@ -24,21 +24,15 @@ export class PieComponent implements OnInit {
     constructor(public dataService: DataService, private http: HttpClient) { }
 
     ngOnInit(): void {
-      if (this.dataService.dataSource.length > 0){
-        this.data = this.dataService.dataSource;
-        this.createSvg();
-        this.createColors();
-        this.drawChart();
-      } else {
+
       this.dataService.getData().subscribe((data: any) => {
-        this.dataService.dataSource = data;
         this.data = data;
         this.createSvg();
         this.createColors();
         this.drawChart();
 
       });
-    }
+
   }
 
     private createSvg(): void {

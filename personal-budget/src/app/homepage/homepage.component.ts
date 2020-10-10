@@ -34,22 +34,15 @@ export class HomepageComponent implements OnInit {
   constructor(private http: HttpClient, public dataService: DataService) { }
 
   ngOnInit(): void {
-    if (this.dataService.dataSource.length > 0){
-      for (let i = 0; i < this.dataService.dataSource.length; i++) {
-        this.dataSource.datasets[0].data[i] = this.dataService.dataSource[i].budget;
-        this.dataSource.labels[i] = this.dataService.dataSource[i].title;
-        this.createChart();
-      }
-    } else {
+
     this.dataService.getData().subscribe((data: any) => {
-      this.dataService.dataSource = data;
       for (let i = 0; i < data.length; i++) {
         this.dataSource.datasets[0].data[i] = data[i].budget;
         this.dataSource.labels[i] = data[i].title;
         this.createChart();
       }
     });
-  }
+
   }
 
   createChart() : void{
