@@ -12,6 +12,9 @@ import { ArticleComponent } from './article/article.component';
 import { AboutComponent } from './about/about.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { P404Component } from './p404/p404.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { ContactComponent } from './contact/contact.component';
+import { PieComponent } from './pie/pie.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { P404Component } from './p404/p404.component';
     ArticleComponent,
     AboutComponent,
     LoginPageComponent,
-    P404Component
+    P404Component,
+    BreadcrumbsComponent,
+    ContactComponent,
+    PieComponent
   ],
   imports: [
     BrowserModule,

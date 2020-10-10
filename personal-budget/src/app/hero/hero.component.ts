@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'pb-hero',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
   }
