@@ -1,5 +1,4 @@
-{
-    "myBudget": [
+[    
     {
     "title" : "Eat out",
     "budget" : "30"
@@ -29,7 +28,4 @@
         "budget" : "90"
     }
 
-    
 ]
-    
-}
