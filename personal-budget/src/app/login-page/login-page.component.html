@@ -1,1 +1,22 @@
-<p>login-page works!</p>
+<div class="container">  
+  <form id="contact" action="" method="post">
+    <h3></h3>
+    <h3>Login here to access the website</h3>
+    <div>
+      <input placeholder="Enter Username" type="text" [(ngModel)]="username" name="username" tabindex="1" required autofocus>
+    </div>      
+    <div>
+      <input placeholder="Enter Password" type="pass" [(ngModel)]="password" name="password" tabindex="3" required>
+    </div>
+    <div>
+    </div>
+    <div>
+    </div>
+    <div>
+        <button id="loginbutton" (click)="loginFunction()">Login</button>
+        New to the website?
+        <button id="signupbutton" (click)="signupFunction()"> Signup</button>
+    </div>
+    
+  </form>
+</div>

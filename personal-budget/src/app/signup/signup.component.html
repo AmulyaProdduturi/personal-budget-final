@@ -1,0 +1,22 @@
+<div class="container">  
+  <form id="contact" action="" method="post">
+    <h3></h3>
+    <h3>Registration Form</h3>
+    <div>
+      <input placeholder="Enter your name"  type="text" [(ngModel)]="username" name="username" tabindex="1" required autofocus>
+    </div>
+    <div>
+      <input placeholder="Enter email Address" [(ngModel)]="email" type="email" name="password" tabindex="2" required>
+    </div>
+    <div>
+      <input placeholder="Enter password" [(ngModel)]="password" type="text" name="email" tabindex="3" required>
+    </div>
+    <div>
+      <input placeholder="Retype your password" [(ngModel)]="repassword" type="text" name="repassword" tabindex="4" required>
+    </div>
+    
+    <div>
+      <button id="loginbutton" (click)="registrationProcess()">Signup</button>
+  </div>
+  </form>
+</div>

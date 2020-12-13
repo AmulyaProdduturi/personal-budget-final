@@ -22,7 +22,7 @@ body {
 }
 
 .container {
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
   margin: 0 auto;
   position: relative;
@@ -48,7 +48,7 @@ body {
   display: block;
   font-size: 30px;
   font-weight: 300;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #contact h4 {
@@ -148,13 +148,6 @@ fieldset {
     height: 100%;
     padding:10px;
     border: round($number: 1);
-}
-#signupbutton{
-  background-color: lightblue;
-  width: 20%;
-  height: 100%;
-  padding:10px;
-  border: round($number: 1);
 }
 
 button{
