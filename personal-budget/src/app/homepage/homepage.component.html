@@ -51,23 +51,21 @@
   
         <!-- This is a Semantic HTML Change -->
       
-        
-  
-        <pb-article>
-            <h1>Results</h1>
-            <div>
-                People who stick to a financial plan, budgeting every expense, get out of debt faster!
-                Also, they to live happier lives... since they expend without guilt or fear...
-                because they know it is all good and accounted for.
-            </div>
-        </pb-article>
+       
   
         <article>
-            <h1>Pie Chart</h1>
+            <h1>PieChart with Current budget</h1>
             <p>
                 <canvas id="myChart" width="400" height="400"></canvas>
             </p>
         </article>
+        <pb-article>
+            <h1>PieChart with Maximum budget</h1>
+            <div>                
+                <canvas id="maxbudgetpie" width="400" height="400" style="width:350px;height:350px"></canvas>
+                <pb-maxbudgetpie></pb-maxbudgetpie>
+            </div>
+        </pb-article>
         <!--<article id="d3chart">
             <h1>Donut chart using d3.js</h1>
             <figure id="pie">

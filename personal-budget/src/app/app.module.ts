@@ -25,6 +25,7 @@ import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableComponent } from './table/table.component';
 import { BarComponent } from './bar/bar.component';
 import { ChartsModule } from 'ng2-charts';
+import { MaxbudgetpieComponent } from './maxbudgetpie/maxbudgetpie.component';
 
 
 
@@ -48,6 +49,7 @@ import { ChartsModule } from 'ng2-charts';
     AddbudgetComponent,
     TableComponent,
     BarComponent,
+    MaxbudgetpieComponent,
 
   ],
   imports: [
