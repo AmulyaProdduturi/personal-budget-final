@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Data } from '@angular/router';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Data,Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'pb-addbudget',
@@ -15,26 +14,25 @@ export class AddbudgetComponent implements OnInit {
   maxbudget:number;
   title:string
 
-  constructor(private _dataService:DataService,private toastr: ToastrService) { }
+  constructor(private _dataService:DataService,private toastr: ToastrService,private router:Router,private ngZone:NgZone) { }
 
   ngOnInit(): void {
   }
 
   expenseAddToast(){
-    //this.toastr.success('Expense Successfully Added. Check you homepage','Success');
+    this.toastr.success('Expense Successfully Added. Check you homepage','Success');
   }
 
-  duplicateExpenseTitle(){
-    //this.toastr.error('Expense already exists. Please add one with a new name','Error');
+  duplicateExpense(){
+    this.toastr.error('Expense already exists. Please add a new category','Error');
   }
 
   incompleteDetails(){
-    //this.toastr.warning('Please enter all the fields','Warning');
+    this.toastr.warning('Please enter all the fields','Warning');
   }
 
   randomColorGen(){
     let randomColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
-    console.log(randomColor)
     return randomColor;    
   }
 
@@ -51,21 +49,21 @@ export class AddbudgetComponent implements OnInit {
       return;
     }
     else{
-    this._dataService.addBudgetdata(record)
-      .subscribe(data =>{
-        console.log(data);
-        this.expenseAddToast
-        this.budget = null;
-        this.maxbudget = null;
-        this.title = "";   
-        this.locationreload();  
-        this.expenseAddToast();        
-      },
-      err => {
-        console.log("Same title already exists");
-        this.duplicateExpenseTitle();
-        this.title = "";
-      })             
+      this._dataService.addBudgetdata(record)
+        .subscribe(data =>{
+          console.log(data);
+          this.budget = null;
+          this.maxbudget = null;
+          this.title = "";   
+          this.expenseAddToast(); 
+          this.ngZone.run(() => {
+            this.router.navigate(['/homepage']);
+          });
+        },
+        err => {
+          this.duplicateExpense();
+          this.title = "";
+        })                        
   }
 }
 

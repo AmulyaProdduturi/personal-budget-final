@@ -46,6 +46,7 @@ export class HomepageComponent implements OnInit {
 
   }
 
+
   createChart() : void{
     var ctx : any = document.getElementById("myChart");
     var myPieChart = new Chart(ctx,{
@@ -53,6 +54,12 @@ export class HomepageComponent implements OnInit {
         data : this.dataSource
     });
 }
+AddBudget(){
+  this.router.navigate(['/addbudget']);
+}
 
+callNgOnInit(){
+  this.ngOnInit();
+}
 
 }

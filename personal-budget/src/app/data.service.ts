@@ -6,6 +6,7 @@ import { UserSchema } from './models/users';
 import { Router } from '@angular/router';
 import { BudgetSchema } from '../app/models/budget';
 
+
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 export interface Item {
@@ -26,8 +27,13 @@ userData : Observable<UserSchema[]>
 
 
 isUserLoggedIn = new Subject<boolean>();
+timerId: any;
+isOpenModel = new Subject<boolean>();
+userRecord = {};
 
-constructor(private http: HttpClient,public router: Router,private toastr:ToastrService) { }
+constructor(private http: HttpClient,public router: Router,private toastr:ToastrService) { 
+  this.isOpenModel.next(false);
+}
 
 getData(): Observable<any> {
   if (this.DataObservable) {
@@ -93,18 +99,56 @@ private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
     console.log(body)
     return this.http.post('http://localhost:3000/auth',body,{'headers':headers}).subscribe((res:any)=>{
       console.log(res);       
+      this.userRecord['username'] = data.username;
+      this.userRecord['password'] = data.password;
+      console.log("user record is "+JSON.stringify(this.userRecord));
       localStorage.setItem('accessToken',res.token);
-          localStorage.setItem('refreshToken',res.refreshToken);                       
+          localStorage.setItem('refreshToken',res.refreshToken);      
+          localStorage.setItem('exp',res.exp);                 
           this.isUserLoggedIn.next(true); 
-          this.loginSuccessful();
-          this.router.navigate(['/homepage']);                    
+          this.router.navigate(['/homepage']);            
+          this.setTimer(true);
         },err=>{
-           // this.invaliduser();
+            this.invaliduser();
         })
-    } 
+    }    
+
     public getLoginStatus(): Observable<boolean> {
       return this.isUserLoggedIn;
     }  
+    public setTimer(flag){
+      console.log("Timer set");
+      if (flag){
+        this.timerId = setInterval(() => {
+          const exp = localStorage.getItem('exp');
+          const expdate = new Date(0).setUTCSeconds(Number(exp));
+          const TokenNotExpired = expdate.valueOf() > new Date().valueOf();
+          const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 20000;
+          console.log(lessThanTwentySecRemaining);
+          if (TokenNotExpired && lessThanTwentySecRemaining) {                          
+            let message = confirm(
+              'Your session is going to expire in 20 seconds! click OK to extend the session!'
+            );
+            if(message){
+              let record = {};
+              record['username'] = this.userRecord['username']
+              record['password'] = this.userRecord['password'];
+              console.log(JSON.stringify(record));
+              this.userLogin(record);
+            }else{
+              message = false;
+            }
+          }                         
+          if (new Date().valueOf() >= expdate.valueOf()){
+            clearInterval(this.timerId);           
+            this.logout();
+            console.log('clear interval');
+    }
+        }, 20000);
+      } else {
+        clearInterval(this.timerId);
+      }
+    }
     public logout(): void {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');   

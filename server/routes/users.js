@@ -9,7 +9,6 @@ router.post('/', async (req, res) => {
     if (user) {
         return res.status(400).send('That user already exists!');
     } else {
-        // Insert the new user if they do not exist yet
         user = new userModel({
             username: req.body.username,
             email: req.body.email,

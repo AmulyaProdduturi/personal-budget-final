@@ -1,6 +1,25 @@
   
-<main class="container center" id = "main">
+    <main class="container center" id = "main">
 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <!-- This is an SEO Change -->
+        <meta name="description" content="Follow the personal budget management app!!">
+        <meta property="og:title" content="Everything you need to know with budget management" />
+        <!-- This is an SEO Change -->
+        <meta name="robots" content="noindex, nofollow">
+        <title>Personal Budget Web Application</title>
+        <!-- This is an SEO Change -->
+       
+    </head>
+      <!-- This is an A11y Change -->
+      <link rel="canonical" href="https://google.com">
+      <!-- This is an SEO Change -->
+       <!-- This is an A11y Change -->
+
+   
+  
     <div class="page-area">
       <pb-breadcrumbs>
         <h1>BreadCrumb component</h1>
@@ -27,21 +46,7 @@
             </div>
         </pb-article>
   
-        <pb-article>
-            <h1>Results</h1>
-            <div>
-                People who stick to a financial plan, budgeting every expense, get out of debt faster!
-                Also, they to live happier lives... since they expend without guilt or fear...
-                because they know it is all good and accounted for.
-            </div>
-        </pb-article>
-  
-        <pb-article>
-            <h1>Free</h1>
-            <div>
-                This app is free!!! And you are the only one holding your data!
-            </div>
-        </pb-article>
+       
         <!-- This is a Semantic HTML Change -->
   
         <!-- This is a Semantic HTML Change -->
@@ -49,7 +54,7 @@
         
   
         <pb-article>
-            <h1>Alerts</h1>
+            <h1>Results</h1>
             <div>
                 People who stick to a financial plan, budgeting every expense, get out of debt faster!
                 Also, they to live happier lives... since they expend without guilt or fear...
@@ -63,24 +68,32 @@
                 <canvas id="myChart" width="400" height="400"></canvas>
             </p>
         </article>
-        <article id="d3chart">
-          <h1>Donut chart using d3.js</h1>
-          <figure id="pie">
-              <pb-pie></pb-pie>
-          </figure>
-      </article>
-      <article id="barchart">
+        <!--<article id="d3chart">
+            <h1>Donut chart using d3.js</h1>
+            <figure id="pie">
+                <pb-pie></pb-pie>
+            </figure>
+        </article>-->
+        <article id="barchart">
+        <h1>Dual Bar-Chart</h1>
+        <figure id="bar">
+            <pb-bar></pb-bar>
+        </figure>
+    </article>
+       
+      <!--<article id="barchart">
           <h1>Bar chart using d3.js</h1>
           <figure id="bar">
               <app-bar-chart></app-bar-chart>
           </figure>
-      </article>
-     <!-- <article id="barchart">
-        <h1>Bar chart using d3.js</h1>
+      </article>-->
+    
+    <article id="barchart">
+        <h1></h1>
         <figure id="bar">
             <pb-table></pb-table>
         </figure>
-    </article>-->
+    </article>
       
      
   
@@ -89,5 +102,11 @@
   
   
     </div>
-  <pb-addbudget></pb-addbudget>
+ <!-- <pb-addbudget></pb-addbudget>-->
+ <div class="container">
+    <div class="row">
+        <h1>Click here to add a new expense!</h1>
+        <button (click)="AddBudget()">Add New Expense</button>
+    </div>
+</div>
   </main>

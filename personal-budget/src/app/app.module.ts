@@ -23,6 +23,8 @@ import { DataService } from './data.service';
 import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableComponent } from './table/table.component';
+import { BarComponent } from './bar/bar.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -45,12 +47,14 @@ import { TableComponent } from './table/table.component';
     SignupComponent,
     AddbudgetComponent,
     TableComponent,
+    BarComponent,
 
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ChartsModule,
     BrowserAnimationsModule,
     FormsModule,
     ToastrModule.forRoot({

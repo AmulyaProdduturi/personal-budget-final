@@ -12,6 +12,10 @@ const budgetSchema = mongoose.Schema({
         type : Number,
         required : true,        
     },
+    maxbudget :{
+        type : Number,
+        required : true,        
+    },
     color:{
         type: String,
         required: true,
