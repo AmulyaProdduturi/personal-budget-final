@@ -4,7 +4,9 @@ import { Observable,Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { UserSchema } from './models/users';
 import { Router } from '@angular/router';
-//import { ToastrService } from 'ngx-toastr';
+import { BudgetSchema } from '../app/models/budget';
+
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 export interface Item {
   name: string;
@@ -25,16 +27,26 @@ userData : Observable<UserSchema[]>
 
 isUserLoggedIn = new Subject<boolean>();
 
-constructor(private http: HttpClient,public router: Router) { }
+constructor(private http: HttpClient,public router: Router,private toastr:ToastrService) { }
 
 getData(): Observable<any> {
   if (this.DataObservable) {
     return this.DataObservable;
   } else {
+    const token = localStorage.getItem('jwt');
+    const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
     this.DataObservable = this.http.get('http://localhost:3000/budget').pipe(shareReplay());
     return this.DataObservable;
   }
 }
+
+addBudgetdata(data:BudgetSchema){
+  const headers = {'content-type': 'application/json'};
+  const body=JSON.stringify(data);
+  console.log(body)
+  return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
+}
+
 private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
   private readonly MIN_ITEM = 10;
@@ -68,7 +80,11 @@ private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
   }
 
   invaliduser(){
-   // this.toastr.error("User does not exist. Please proceed to signup page",'Error');
+   this.toastr.error("User does not exist. Please proceed to signup page",'Error');
+  }
+
+  loginSuccessful(){
+    this.toastr.success('Logged In','Success');
   }
 
   userLogin(data:UserSchema){
@@ -80,12 +96,23 @@ private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
       localStorage.setItem('accessToken',res.token);
           localStorage.setItem('refreshToken',res.refreshToken);                       
           this.isUserLoggedIn.next(true); 
-          this.router.navigate(['/homepage']);            
+          this.loginSuccessful();
+          this.router.navigate(['/homepage']);                    
         },err=>{
            // this.invaliduser();
         })
     } 
     public getLoginStatus(): Observable<boolean> {
       return this.isUserLoggedIn;
-    }   
+    }  
+    public logout(): void {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');   
+      this.isUserLoggedIn.next(false);
+      this.router.navigate(['/login']);
+    } 
+    verifyTokenPresence(){
+      return !!localStorage.getItem('token');
+    }
+    
 }

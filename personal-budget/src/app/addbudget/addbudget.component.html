@@ -1,1 +1,25 @@
-<p>addbudget works!</p>
+<div class="container">
+    <div class="row">
+        <h1>Add a new Budget below</h1>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="expense">Expense Name: </label>
+            <input type="text" class="form-control" [(ngModel)]="title" placeholder="Enter Expense Name" ngModel name="expense" id="expense">
+        </div>
+        <div>
+           
+        </div>
+        <div class="form-group">
+            <label for="limit">Budget limit: </label>
+            <input type="number" class="form-control" [(ngModel)]="maxbudget" placeholder="Enter the max limit" ngModel name="limit" id="limit">
+        </div>
+        <div class="form-group">
+            <label for="current">Current Budget: </label>
+            <input type="number" class="form-control" [(ngModel)]="budget" placeholder="Enter Current budget" ngModel name="current" id="current">
+        </div>
+        <div class="form-group">        
+            <button class="btn btn-primary"(click)="sendExpense()" [disabled]="!title || !maxbudget || !budget">Submit</button>
+        </div>
+    </div>
+</div>

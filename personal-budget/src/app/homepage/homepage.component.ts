@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart } from 'chart.js'
 import * as D3 from 'd3';
+import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 
 @Component({
@@ -31,7 +32,7 @@ export class HomepageComponent implements OnInit {
     ]
 };
 
-  constructor(private http: HttpClient, public dataService: DataService) { }
+  constructor(private http: HttpClient, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
 

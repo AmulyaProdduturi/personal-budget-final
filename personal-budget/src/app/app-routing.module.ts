@@ -6,12 +6,14 @@ import { AboutComponent } from './about/about.component';
 import { P404Component } from './p404/p404.component';
 import { ContactComponent } from './contact/contact.component';
 import { SignupComponent} from './signup/signup.component';
+import {AddbudgetComponent} from './addbudget/addbudget.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: HomepageComponent
+    component: LoginPageComponent,
+    pathMatch : 'full' 
   },
   {
     path: 'about',
@@ -19,7 +21,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPageComponent
+    component: LoginPageComponent,
+     
   },
   {
     path: 'contact',
@@ -27,11 +30,21 @@ const routes: Routes = [
   },
   {
     path: 'homepage',
-    component: HomepageComponent
+    component: HomepageComponent,
+    pathMatch: 'full'  
   },
   {
     path: 'signup',
-    component: SignupComponent
+    component: SignupComponent,
+    pathMatch : 'full'
+  },
+  {
+    path: 'addbudget',
+    component: AddbudgetComponent
+  },
+  {
+    path:'logout',
+    component: LoginPageComponent
   },
 
   {

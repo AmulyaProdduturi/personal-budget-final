@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NotificationService } from './notification.service';
+
 
 @Component({
   selector: 'pb-root',
@@ -7,4 +9,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'personal-budget';
+  
 }

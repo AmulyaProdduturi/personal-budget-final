@@ -18,6 +18,13 @@ import { PieComponent } from './pie/pie.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { SignupComponent } from './signup/signup.component';
 import { AddbudgetComponent } from './addbudget/addbudget.component';
+import {AuthguardGuard} from './authguard.guard';
+import { DataService } from './data.service';
+import { ToastrModule } from 'ngx-toastr';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableComponent } from './table/table.component';
+
+
 
 
 @NgModule({
@@ -36,16 +43,26 @@ import { AddbudgetComponent } from './addbudget/addbudget.component';
     PieComponent,
     BarChartComponent,
     SignupComponent,
-    AddbudgetComponent
+    AddbudgetComponent,
+    TableComponent,
 
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule    
+    BrowserAnimationsModule,
+    FormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      progressAnimation: 'increasing',
+      positionClass: 'toast-top-left',
+      preventDuplicates: true 
+    })
   ],
-  providers: [],
+  providers: [DataService, AuthguardGuard],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  
+ }
