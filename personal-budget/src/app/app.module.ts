@@ -26,6 +26,7 @@ import { TableComponent } from './table/table.component';
 import { BarComponent } from './bar/bar.component';
 import { ChartsModule } from 'ng2-charts';
 import { MaxbudgetpieComponent } from './maxbudgetpie/maxbudgetpie.component';
+import { LinechartComponent } from './linechart/linechart.component';
 
 
 
@@ -50,6 +51,7 @@ import { MaxbudgetpieComponent } from './maxbudgetpie/maxbudgetpie.component';
     TableComponent,
     BarComponent,
     MaxbudgetpieComponent,
+    LinechartComponent,
 
   ],
   imports: [

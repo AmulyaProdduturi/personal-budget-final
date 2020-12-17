@@ -20,20 +20,22 @@ export class PieComponent implements OnInit {
 
     private radius = Math.min(this.width, this.height) / 2 - this.margin;
     private colors;
+    public loggedInUserName:any
 
-    constructor(public dataService: DataService, private http: HttpClient) { }
+
+    constructor(public _dataService : DataService, private http: HttpClient) { }
 
     ngOnInit(): void {
-
-      this.dataService.getData().subscribe((data: any) => {
-        this.data = data;
+      this.loggedInUserName = this._dataService.loggedInUserName;
+    this._dataService.getData(this.loggedInUserName)
+      .subscribe((res: any) => {   
+        console.log(res);
+        this.data = res;
         this.createSvg();
         this.createColors();
         this.drawChart();
-
       });
-
-  }
+    }
 
     private createSvg(): void {
       this.svg = d3.select('figure#pie')

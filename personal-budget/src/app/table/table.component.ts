@@ -22,15 +22,18 @@ export class TableComponent implements OnInit {
 
   data = []
 
-  constructor(private _dataService: DataService) { }
+  public loggedInUserName:any
+  constructor(private _dataService: DataService) {
+    this.loggedInUserName = this._dataService.loggedInUserName;
+   }
 
-  ngOnInit(): void {
-    this._dataService.getData()
+  ngOnInit(): void {    
+    this._dataService.getData(this.loggedInUserName)
     .subscribe((res:any)=>{
       this.data = res
       console.log(this.data);
     })
-
+  
 
 }
 

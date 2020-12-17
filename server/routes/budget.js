@@ -14,9 +14,10 @@ const jwtMW = exjwt({
     algorithms: ['HS256']
 })
 
-router.get('/',(req,res)=>{  
-        
-    budgetModel.find({})
+router.get('/',jwtMW,(req,res)=>{  
+    userid = String(req.query.userid);
+    console.log(userid);
+    budgetModel.find({username:userid})
     .then((data)=>{
         console.log(data);
         res.status(200).send(data);
@@ -27,8 +28,7 @@ router.get('/',(req,res)=>{
     })    
 })
 
-router.post('/',async (req,res)=>{
-    console.log("inside post");
+router.post('/',jwtMW,async (req,res)=>{
     console.log(req.body);    
     let record = await budgetModel.findOne({ title: req.body.title });
     if(record){
@@ -38,7 +38,8 @@ router.post('/',async (req,res)=>{
         title: req.body.title,
         budget: req.body.budget,
         maxbudget: req.body.maxbudget,
-        color: req.body.color        
+        color: req.body.color,
+        username:req.body.username   
     });
     
     await budgetinfo.save();

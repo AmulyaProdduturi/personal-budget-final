@@ -31,29 +31,35 @@ export class HomepageComponent implements OnInit {
 
     ]
 };
+public loggedInUserName:any;
 
-  constructor(private http: HttpClient, public dataService: DataService,private router:Router) { }
+constructor(private _dataService : DataService,private router:Router) { }
 
-  ngOnInit(): void {
+ngOnInit(): void {
 
-    this.dataService.getData().subscribe((data: any) => {
-      for (let i = 0; i < data.length; i++) {
-        this.dataSource.datasets[0].data[i] = data[i].budget;
-        this.dataSource.labels[i] = data[i].title;
-        this.createChart();
-      }
-    });
-
+this.loggedInUserName = this._dataService.loggedInUserName;
+this._dataService.getData(this.loggedInUserName)
+.subscribe((res: any) => {
+  console.log(res);
+  for (let i = 0; i < res.length; i++) {
+   this.dataSource.datasets[0].data[i] = res[i].budget;
+   this.dataSource.labels[i] = res[i].title;
+   this.dataSource.datasets[0].backgroundColor[i] = res[i].color;
+   this.createChart();
   }
+});
 
 
-  createChart() : void{
-    var ctx : any = document.getElementById("myChart");
-    var myPieChart = new Chart(ctx,{
-        type: 'pie',
-        data : this.dataSource
-    });
 }
+
+createChart(){
+  var ctx : any = document.getElementById("myChart")
+  var myPieChart = new Chart(ctx,{
+      type: 'pie',
+      data : this.dataSource
+  })
+}
+
 AddBudget(){
   this.router.navigate(['/addbudget']);
 }

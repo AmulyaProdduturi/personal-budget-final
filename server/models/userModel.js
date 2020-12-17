@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema({
         minlength: 5,
         maxlength: 1024
     }
+ 
 },{collection : 'user'})
  
 const userModel = mongoose.model('user',userSchema);

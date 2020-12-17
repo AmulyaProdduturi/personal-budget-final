@@ -5,8 +5,7 @@ import { shareReplay } from 'rxjs/operators';
 import { UserSchema } from './models/users';
 import { Router } from '@angular/router';
 import { BudgetSchema } from '../app/models/budget';
-
-
+import { local } from 'd3';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 export interface Item {
@@ -24,30 +23,32 @@ export class DataService {
 
 DataObservable: Observable<any>;
 userData : Observable<UserSchema[]>
+budgetData: Observable<BudgetSchema[]>;
 
 
 isUserLoggedIn = new Subject<boolean>();
 timerId: any;
 isOpenModel = new Subject<boolean>();
 userRecord = {};
+logouthandler = true;
+loggedInUserName : any;
+
 
 constructor(private http: HttpClient,public router: Router,private toastr:ToastrService) { 
   this.isOpenModel.next(false);
 }
 
-getData(): Observable<any> {
-  if (this.DataObservable) {
-    return this.DataObservable;
-  } else {
-    const token = localStorage.getItem('jwt');
-    const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
-    this.DataObservable = this.http.get('http://localhost:3000/budget').pipe(shareReplay());
-    return this.DataObservable;
-  }
+getData(username): Observable<any> {
+  const token = localStorage.getItem('accessToken');  
+  console.log(token);
+  const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
+    this.DataObservable = this.http.get('http://localhost:3000/budget',{ headers: headers,params:{userid : username }}).pipe(shareReplay());
+    return this.DataObservable;  
 }
 
 addBudgetdata(data:BudgetSchema){
-  const headers = {'content-type': 'application/json'};
+  const token = localStorage.getItem('accessToken');
+  const headers = {'content-type': 'application/json','Authorization' : `Bearer ${token}`};
   const body=JSON.stringify(data);
   console.log(body)
   return this.http.post('http://localhost:3000/budget',body,{'headers':headers});
@@ -102,6 +103,7 @@ private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
       this.userRecord['username'] = data.username;
       this.userRecord['password'] = data.password;
       console.log("user record is "+JSON.stringify(this.userRecord));
+      this.loggedInUserName = data.username;
       localStorage.setItem('accessToken',res.token);
           localStorage.setItem('refreshToken',res.refreshToken);      
           localStorage.setItem('exp',res.exp);                 
@@ -113,9 +115,7 @@ private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
         })
     }    
 
-    public getLoginStatus(): Observable<boolean> {
-      return this.isUserLoggedIn;
-    }  
+ 
     public setTimer(flag){
       console.log("Timer set");
       if (flag){
@@ -125,36 +125,46 @@ private readonly NAMES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
           const TokenNotExpired = expdate.valueOf() > new Date().valueOf();
           const lessThanTwentySecRemaining = expdate.valueOf() - new Date().valueOf() <= 20000;
           console.log(lessThanTwentySecRemaining);
-          if (TokenNotExpired && lessThanTwentySecRemaining) {                          
+          if (TokenNotExpired && lessThanTwentySecRemaining && this.logouthandler) {                                        
             let message = confirm(
               'Your session is going to expire in 20 seconds! click OK to extend the session!'
             );
-            if(message){
+            if(message && this.logouthandler){
               let record = {};
               record['username'] = this.userRecord['username']
               record['password'] = this.userRecord['password'];
               console.log(JSON.stringify(record));
+              this.logouthandler = true;
               this.userLogin(record);
             }else{
+              console.log("Session will continue");
               message = false;
+              this.logouthandler = false;
             }
           }                         
           if (new Date().valueOf() >= expdate.valueOf()){
             clearInterval(this.timerId);           
             this.logout();
-            console.log('clear interval');
+            return;
     }
         }, 20000);
       } else {
         clearInterval(this.timerId);
       }
     }
+
     public logout(): void {
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');   
+      localStorage.removeItem('refreshToken');  
+      localStorage.removeItem('exp');  
+      this.loggedInUserName = "";  
       this.isUserLoggedIn.next(false);
       this.router.navigate(['/login']);
     } 
+    public getLoginStatus(): Observable<boolean> {
+      return this.isUserLoggedIn;
+    }    
+
     verifyTokenPresence(){
       return !!localStorage.getItem('token');
     }

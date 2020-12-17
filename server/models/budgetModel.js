@@ -5,8 +5,7 @@ const budgetSchema = mongoose.Schema({
     title :{
         type: String,
         required : true,
-        trim: true,
-        unique: true
+        trim: true,        
     },
     budget :{
         type : Number,
@@ -20,9 +19,14 @@ const budgetSchema = mongoose.Schema({
         type: String,
         required: true,
         match: [/^#(?:[0-9a-fA-F]{3}){1,2}$/, 'Invalid Color']
+    },
+    username:{
+        type:String,
+        required:true,
+        trim:true
     }
 },{collection : 'budget'})
 
-const budgetModel = mongoose.model('task',budgetSchema);
+const budgetModel = mongoose.model('budget',budgetSchema);
 
 module.exports = budgetModel;

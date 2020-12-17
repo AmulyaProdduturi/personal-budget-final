@@ -39,13 +39,15 @@ export class BarComponent implements OnInit {
   onChartClick(event) {
     console.log(event);
   }
+  public loggedInUserName:any;
 
 
   constructor(private http: HttpClient,public _dataService: DataService) { }
 
   ngOnInit(): void {
     
-    this._dataService.getData()
+    this.loggedInUserName = this._dataService.loggedInUserName;
+    this._dataService.getData(this.loggedInUserName)
     .subscribe((res: any) => {
       console.log(res[0]);
       for (let i = 0; i < res.length; i++) {
@@ -53,7 +55,7 @@ export class BarComponent implements OnInit {
         this.chartData[0].data[i] = res[i].budget;
         this.chartData[1].data[i] = res[i].maxbudget;
         this.labels[i] = res[i].title;
-    
+     
       }
     });
     }

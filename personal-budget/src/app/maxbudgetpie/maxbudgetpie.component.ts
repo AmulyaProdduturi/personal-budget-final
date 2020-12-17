@@ -17,16 +17,18 @@ export class MaxbudgetpieComponent implements OnInit {
         ]
     }],
 
-    // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
         
     ]
   }
+  public loggedInUserName:any;
+
 
   constructor(private _dataService : DataService) { }
 
   ngOnInit(): void {
-    this._dataService.getData()
+    this.loggedInUserName = this._dataService.loggedInUserName;
+    this._dataService.getData(this.loggedInUserName)
   .subscribe((res: any) => {
     console.log(res);
     for (let i = 0; i < res.length; i++) {

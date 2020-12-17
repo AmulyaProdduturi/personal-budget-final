@@ -22,12 +22,12 @@ router.post('/', async (req, res) => {
         return res.status(206).send('Incorrect username or password.');
     }
  
+    
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) {
         return res.status(204).send('Incorrect email or password.');
     }
-    const token = jwt.sign({ _id: user._id,username: user.username }, accessTokenKey,{expiresIn:'60s'});
-    const refreshToken = jwt.sign({ _id: user._id,username: user.username }, refreshKey,{expiresIn:'180s'});
+    const token = jwt.sign({ _id: user._id,username: user.username }, accessTokenKey,{expiresIn:'60s'});    
     loginStatus = true;
     var decoded_token = jwt_decode(token);
     res.status(200).json({
@@ -35,7 +35,6 @@ router.post('/', async (req, res) => {
         err:null,
         exp:decoded_token.exp,
         token,
-        refreshToken,
         loginStatus
     })
 });
