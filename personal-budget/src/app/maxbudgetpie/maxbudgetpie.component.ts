@@ -12,6 +12,7 @@ export class MaxbudgetpieComponent implements OnInit {
 
   public dataSource = {
     datasets: [{
+        label: 'Maximum Budget',
         data: [],
         backgroundColor : [           
         ]
@@ -43,7 +44,7 @@ export class MaxbudgetpieComponent implements OnInit {
   createChart(){
     var ctx : any = document.getElementById("maxbudgetpie")
     var myPieChart = new Chart(ctx,{
-        type: 'pie',
+        type: 'line',
         data : this.dataSource
     })
 }

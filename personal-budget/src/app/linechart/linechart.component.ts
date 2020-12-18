@@ -23,24 +23,25 @@ export class LinechartComponent implements OnInit {
         
     ]
 };
-public loggedInUserName :any;
 
+  public loggedInUserName :any;
 
-constructor(private _dataService : DataService) { 
-  this.loggedInUserName = this._dataService.loggedInUserName;
-}
+  constructor(private _dataService : DataService) { 
+    this.loggedInUserName = this._dataService.loggedInUserName;
+  }
 
-ngOnInit(): void {
-      
-  this._dataService.getData(this.loggedInUserName)
-  .subscribe((res:any)=>{
-    for (let i = 0; i < res.length; i++) {
-       this.dataSource.datasets[0].data[i] = res[i].budget;
-       this.dataSource.labels[i] = res[i].title;
-            
-    }
-  })
-}
+  ngOnInit(): void {
+        
+    this._dataService.getData(this.loggedInUserName)
+    .subscribe((res:any)=>{
+      console.log(res);
+      for (let i = 0; i < res.length; i++) {
+         this.dataSource.datasets[0].data[i] = res[i].budget;
+         this.dataSource.labels[i] = res[i].title;
+        //this.createChart();      
+      }
+    })
+  }
 
   createChart(){
     var ctx : any = document.getElementById("lineChart")
